@@ -1,13 +1,18 @@
 # Windows Installation 
 
 1) Firstly, we install Docker Desktop for Windows:
-      Download the software from the below link:
-            https://hub.docker.com/editions/community/docker-ce-desktop-windows
-      This is Docker Community Edition
+
+Download the software from the below link:
+
+https://hub.docker.com/editions/community/docker-ce-desktop-windows
+
+This is Docker Community Edition
 
 2) Checking the installation:
-  a) Open Command Prompt
-  b) Run the commands as follows:
+  
+      a) Open Command Prompt
+  
+      b) Run the commands as follows:
 
       ```
       docker --version                                                                         
