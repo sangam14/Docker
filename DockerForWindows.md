@@ -57,7 +57,7 @@ This is Docker Community Edition
     root@9a1c1c3a9200:/# hostname                                                                                          9a1c1c3a9200                                                                                                           root@9a1c1c3a9200:/# exit                                                                                              exit 
     ```
     
-   2) Listing all containers
+2) Listing all containers
    
    ```
    docker ps -a                                                                             CONTAINER ID        IMAGE               COMMAND             CREATED             STATUS                          PORTS               NAMES                                                                                                     9a1c1c3a9200        ubuntu              "bash"              15 minutes ago      Exited (0) About a minute ago                       epic_feistel                                                                                              f0c1f026adf6        hello-world         "/hello"            31 minutes ago      Exited (0) 31 minutes ago                           priceless_cray  
@@ -78,10 +78,18 @@ This is Docker Community Edition
    docker image ls --all                                                                    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE                                   ubuntu              latest              7698f282e524        2 weeks ago         69.9MB                                 hello-world         latest              fce289e99eb9        5 months ago        1.84kB     
    ```
    
-   4) Running a Nginx Webserver Container and exposing it on port 80 of host.
+   
+4) Running a Nginx Webserver Container and exposing it on port 80 of host.
    
    ```
    docker run -d -p 80:80 --name webserver nginx                                                                                                                                        Unable to find image 'nginx:latest' locally                                                                                                                                                                        latest: Pulling from library/nginx                                                                                                                                                                                 743f2d6c1f65: Pull complete                                                                                                                                                                                        6bfc4ec4420a: Pull complete                                                                                                                                                                                        688a776db95f: Pull complete                                                                                                                                                                                        Digest: sha256:23b4dcdf0d34d4a129755fc6f52e1c6e23bb34ea011b315d87e193033bcd1b68                                                                                                                                    Status: Downloaded newer image for nginx:latest                                                                                                                                                                    fbe357f86246d715c90c2339496a011f8b38d19389bcf925c4aefaed0182b97a                                                                                                                                                                                                                                                                                                                   ```
    ```docker ps                                                                                                                                                                            CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                NAMES                                                                               fbe357f86246        nginx               "nginx -g 'daemon of…"   About a minute ago   Up About a minute   0.0.0.0:80->80/tcp   webserver
    ```
    The Nginx server page is served when we open localhost on a browser.
+   
+   # Working with Windows Containers
+   
+   1) By default, Docker Desktop is in Linux Containers mode. Switch it to Windows Container from the tray menu.
+   2) Let's begin with Windows Container:
+   
+   
