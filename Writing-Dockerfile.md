@@ -7,3 +7,11 @@ To write a Dockerfile, we need to keep in mind the following keywords:
 ### FROM
 This directive lets a user define a base image to initiate the build process. Any image can be provided here - including the ones a user creates by himself.
 If the image specified is not found on the host, Docker attempts to search and download it from Docker Hub (public repositary) or any other specified private repositary.
+
+Usage: FROM image-name
+```
+FROM centos:latest
+```
+
+### ADD
+This command takes two arguments -  a source and a destination. The files present on the source (may be localhost system or some remote URL) are copied to the destination system.
