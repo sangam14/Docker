@@ -22,3 +22,9 @@ Usage: ADD (source directory from base system or URL) (destination filesystem of
 ADD /hello /hello
 ```
 
+### VOLUME
+This command lets user mount a volume or directory present on base system on the container. Thus, it is like enabling access to the base's directory which is mounted and any changes made to it are visible to the container.
+
+```
+VOLUME [/a1 /a2 /a3]
+```
