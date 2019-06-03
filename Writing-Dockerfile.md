@@ -14,4 +14,11 @@ FROM centos:latest
 ```
 
 ### ADD
-This command takes two arguments -  a source and a destination. The files present on the source (may be localhost system or some remote URL) are copied to the destination system.
+This command takes two arguments -  a source and a destination. The files present on the source (may be localhost system or some remote URL) are copied to the destination specified path in the container file system. 
+
+Usage: ADD (source directory from base system or URL) (destination filesystem of container)
+
+```
+ADD /hello /hello
+```
+
