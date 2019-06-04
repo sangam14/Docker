@@ -68,3 +68,5 @@ CMD echo 'Hello World'
 
 ### ENTRYPOINT
 It sets the concrete default application that is used every time a container is created from an image. It configures a container that can run as an executable.
+
+
