@@ -28,3 +28,43 @@ This command lets user mount a volume or directory present on base system on the
 ```
 VOLUME [/a1 /a2 /a3]
 ```
+
+### MAINTAINER
+It is used to provide author's name to the image formed.
+
+```
+MAINTAINER Prashansa Kulshrestha
+```
+
+### ENV
+It is used to specify environment variables in the form of key-value pairs.
+
+```
+ENV DISPLAY :0
+```
+### LABEL
+It is used to provide metadata for an image and is provided as key-value pair.
+
+```
+LABEL version="1.0"
+```
+### RUN
+This takes a command as an argument and runs it over the base image to form a new layer. 
+
+
+Default shell used for a Linux container is /bin/sh. For a Windows container, cmd /s /c shell is used by default.
+
+```
+RUN yum install httpd
+```
+
+### CMD
+The shell command specified with CMD becomes the default command which executes when a container initiates from an image.
+If used in conjunction with ENTRYPOINT command, CMD provides default argument to the ENTRYPOINT command.
+
+```
+CMD echo 'Hello World'
+```
+
+### ENTRYPOINT
+It sets the concrete default application that is used every time a container is created from an image. It configures a container that can run as an executable.
