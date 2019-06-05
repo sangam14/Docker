@@ -86,6 +86,10 @@ If source is some remote URL, default permissions for it are 600.
 
 5) In case of multiple sources, provide a directory as a destination (with a trailing slash)
 
+6) In case the source is a local tar archive, it is decompressed and files are copied into the destination directory.
+
+7) Tar archives at remote URL are not decompressed.
+
 
  
 
