@@ -98,6 +98,13 @@ If source is some remote URL, default permissions for it are 600.
 
 ## ADD vs COPY
 
+COPY is another method for performing similar work as ADD and obeys the same rules.
+
+The difference between these two instructions lies as follows:
+
+1) COPY can't take remote URLs as source, whereas ADD can.
+
+2) COPY can't extract a tar file directly into the destination.
  
 
 
