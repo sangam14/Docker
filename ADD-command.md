@@ -90,8 +90,13 @@ If source is some remote URL, default permissions for it are 600.
 
 7) Tar archives at remote URL are not decompressed.
 
+8) A source URL must be a non trivial reference to a file. Example: http://www.abc.com/hello.txt is allowed, but http://www.abc.com/ won't work.
 
- 
+9) If STDIN method is used to pass a Dockerfile, there is no build context for this. So, we need to provide a remote URL as a source for this case.
+
+
+
+## ADD vs COPY
 
  
 
