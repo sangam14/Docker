@@ -105,6 +105,13 @@ The difference between these two instructions lies as follows:
 1) COPY can't take remote URLs as source, whereas ADD can.
 
 2) COPY can't extract a tar file directly into the destination.
+
+Best practice is to use COPY for copying local filesystem's files, an operation which doesn't require the extra magic of ADD.
+Also, when you need to keep the tar archive intact, use COPY instead of ADD.
+
+Remote file downloading via ADD is also discouraged in best practices. It is recommended to use curl or wget commands using RUN instruction.
+
+So, preferrably, ADD should be used only for auto-tar extraction capabilities. 
  
 
 
