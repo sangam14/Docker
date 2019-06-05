@@ -52,6 +52,44 @@ Destination can be an absolute path or a path relative to WORKDIR.
  This working directory corresponds to instructions like RUN, CMD, ENTRYPOINT, ADD and COPY.
  ```
  
+Example:
+ 
+Let the WORKDIR be /home
+ 
+ ```
+ ADD test user/   # The file test will be added to /home/user/
+ 
+ ADD test /user/  # The file test will be added to /user/
+ ```
+ 
+#### chown flag
+
+This is optional and applies only to Linux containers. In case this flag is not encountered, files/directories added to the image have UID and GID set to 0, that is their owner and group is set to 'root'.
+
+This option can take usernames or groupnames as strings or can even take their respective numeric values as UID or GID.
+
+If groupname is skipped, GID is set same as UID, that is default group of the user specifies is used.
+
+The usernames and the groupnames provided are matched against /etc/passwd and /etc/group files of the container filesystem. So, make sure that you add the necessary users using RUN instruction if they don't exist by default.
+
+If source is some remote URL, default permissions for it are 600.
+
+#### Rule for ADD
+
+1) Source files must be inside the context of the build. This is because the command 'docker build' first provides the context directory to the docker daemon and then initiates the build process.
+
+2) If source is a directory, all its files and metadata is copied to destination, but not the directory itself.
+
+3) If the destination has a trailing slash, it is considered a directory.
+
+4) If the destination does not has a trailing slash, it is considered a file and the source's contents are written on it.
+
+5) In case of multiple sources, provide a directory as a destination (with a trailing slash)
+
+
+ 
+
+ 
 
 
 
