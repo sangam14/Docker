@@ -28,3 +28,39 @@ Usage:
 ADD hello.py /root/home/hello.py
 ```
 
+#### Pattern Matching in Source Names 
+
+Wildcards are used for creating patterns in source names.
+
+Examples:
+
+```
+ADD myfile* /home/       #This would add all files starting with "myfile" - like myfile1.txt, myfile.py, myfilefinal.sh, etc.
+```
+
+```
+ADD myfile?.txt /home/      #This would match only a single character after "myfile" - like myfile1.txt
+```
+
+Wildcard matching rules are in accordance with Go language, the one in which Docker tool was built.
+
+#### Destination paths
+
+Destination can be an absolute path or a path relative to WORKDIR.
+We can specify a working directory for the image using WORKDIR. This working directory
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
