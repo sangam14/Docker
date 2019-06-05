@@ -47,7 +47,11 @@ Wildcard matching rules are in accordance with Go language, the one in which Doc
 #### Destination paths
 
 Destination can be an absolute path or a path relative to WORKDIR.
-We can specify a working directory for the image using WORKDIR. This working directory
+ ```
+ Note: We can specify a working directory for the image using WORKDIR. 
+ This working directory corresponds to instructions like RUN, CMD, ENTRYPOINT, ADD and COPY.
+ ```
+ 
 
 
 
