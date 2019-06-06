@@ -27,4 +27,6 @@ To resolve such issues, we can opt for builds using --no-cache flag. With this f
 
 Let's build the same Dockerfile again. This time we will use the option --no-cache. 
 
-![No Cache](https://github.com/Prashansa-K/Docker/blob/master/Writing%20Dockerfiles/cache.png)
+![No Cache](https://github.com/Prashansa-K/Docker/blob/master/Writing%20Dockerfiles/nocache.png)
+
+As you can see, the build is fresh and no cache is used.
