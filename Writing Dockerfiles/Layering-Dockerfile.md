@@ -11,4 +11,13 @@ Each layer is read-only except the last one - this is added to the image for gen
 
 Let's understand this layering using an example:
 
+Consider the Dockerfile given below:
 
+![Docker layers in Dockerfile](https://github.com/Prashansa-K/Docker/blob/master/Writing%20Dockerfiles/layering1.png)
+
+### Layer ID
+Each instruction the Dockerfile generates a layer. Each of this layer has a randomly generated unique ID. This ID can be seen at the time of build. See the image below:
+
+![Docker layers during Build](https://github.com/Prashansa-K/Docker/blob/master/Writing%20Dockerfiles/layering2.png)
+
+To view all these layers 
