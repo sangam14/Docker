@@ -8,6 +8,8 @@ If these files/filesystem objects remain unchanged during future builds or durin
 Let's see what happens when we rebuild an image which was already built.
 
 Dockerfile used in this case is as such:
-![Dockerfile]()
+![Dockerfile](https://github.com/Prashansa-K/Docker/blob/master/Writing%20Dockerfiles/layering1.png)
 
 We first built this Dockerfile to create testimage:latest. Now, building testimage:v2.
+
+![Cache](https://github.com/Prashansa-K/Docker/blob/master/Writing%20Dockerfiles/cache.png)
