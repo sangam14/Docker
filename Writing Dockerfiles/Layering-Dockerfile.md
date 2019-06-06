@@ -22,4 +22,8 @@ Each instruction the Dockerfile generates a layer. Each of this layer has a rand
 
 To view all these layers once an image is built from a Dockerfile, we can use docker history command.
 
-![Docker history]()
+![Docker history](https://github.com/Prashansa-K/Docker/blob/master/Writing%20Dockerfiles/layering3.png)
+
+
+
+
