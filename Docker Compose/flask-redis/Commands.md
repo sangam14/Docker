@@ -372,6 +372,88 @@ With run, port-mapping is not applied to avoid port-conflicts.
 
 <Desired State concept -- change is there then recreate>
  
+ ## Pushing to docker Registry
+ 
+ ```
+ $ docker login
+Login with your Docker ID to push and pull images from Docker Hub. If you don't have a Docker ID, head over to https://hub.docker.com to create one.
+Username: prashansa1998
+Password:
+WARNING! Your password will be stored unencrypted in /root/.docker/config.json.
+Configure a credential helper to remove this warning. See
+https://docs.docker.com/engine/reference/commandline/login/#credentials-store
+
+Login Succeeded
+
+
+
+
+[node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
+$ docker-compose push
+Pushing app (prashansa1998/flask-redis:1.0)...
+The push refers to repository [docker.io/prashansa1998/flask-redis]
+fb394277e3aa: Pushed
+3848f16c304b: Pushed
+3b2166302a6f: Pushed
+a4a40437c4ee: Pushed
+3b3df229744d: Mounted from library/python
+6795dbd93463: Mounted from library/python
+e2986b5e7ba2: Mounted from library/python
+beefb6beb20f: Mounted from library/python
+df64d3292fd6: Mounted from library/redis
+1.0: digest: sha256:e32a248711095725572b1f0850aad25ffbf6a459931e632cf2d57826d27d57e2 size: 2200
+ ```
+ 
+Now, we can build the same application stack on another machine by pulling it.
+
+transfer compose file there - scp
+
+```
+[node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
+$ scp docker-compose.yml root@192.168.0.11:/root
+The authenticity of host '192.168.0.11 (192.168.0.11)' can't be established.
+RSA key fingerprint is SHA256:Vhwhn289853wPTtkgw7ZBUwsJfDwSiviUQmdhFg304I.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added '192.168.0.11' (RSA) to the list of known hosts.
+docker-compose.yml                                                             100%  295   358.3KB/s   0.3KB/s   00:00
+[node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
+```
+
+```
+$ ls
+docker-compose.yml
+[node3] (local) root@192.168.0.11 ~
+$ docker-compose pull
+Pulling app   ... done
+Pulling redis ... done
+```
+
+```
+[node3] (local) root@192.168.0.11 ~
+$ docker-compose up -d
+Creating network "root_default" with the default driver
+Creating root_app_1   ... done
+Creating root_redis_1 ... done
+[node3] (local) root@192.168.0.11 ~
+$ docker-compose ps
+    Name                  Command               State           Ports
+------------------------------------------------------------------------------
+root_app_1     /bin/sh -c flask run --hos ...   Up      0.0.0.0:5000->5000/tcp
+root_redis_1   docker-entrypoint.sh redis ...   Up      6379/tcp
+```
+
+```
+
+[node3] (local) root@192.168.0.11 ~
+$ curl --header "Content-Type: application/json" \
+> --request POST \
+> --data '{"name":"Prashi"}' localhost:5000
+{
+  "name": "Prashi"
+}
+
+```
+ 
  
 
 
