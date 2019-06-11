@@ -101,8 +101,9 @@ flask-redis_redis_1   docker-entrypoint.sh redis ...   Up      6379/tcp
 
 ### Testing the Application
 
+1) Posting Data
 ```
-curl --header "Content-Type: application/json" \
+$ curl --header "Content-Type: application/json" \
 > --request POST \
 > --data '{"name":"Prashansa"}' localhost:5000
 
@@ -110,5 +111,84 @@ curl --header "Content-Type: application/json" \
   "name": "Prashansa"
 }
 ```
+
+2) Retrieving data
+
+```
+$ curl localhost:5000
+[
+  "\\{'name':Prashansa\\}"
+]
+```
+
+### Network Connectivity between Containers
+
+```
+$ docker network ls
+NETWORK ID          NAME                        DRIVER              SCOPE
+344ec39bd0ca        bridge                      bridge              local
+aa7019865c83        flask-redis_default         bridge              local
+8cea80409ff9        host                        host                local
+dfd444fd66e5        none                        null                local
+3f5442234fbd        wordpress-service_default   bridge              local
+```
+
+```
+$ docker network inspect flask-redis_default
+[
+    {
+        "Name": "flask-redis_default",
+        "Id": "aa7019865c83f7b29728e7819906d14c2a48929c735245e4fd726353a7576225",
+        "Created": "2019-06-11T09:24:41.672287478Z",
+        "Scope": "local",
+        "Driver": "bridge",
+        "EnableIPv6": false,
+        "IPAM": {
+            "Driver": "default",
+            "Options": null,
+            "Config": [
+                {
+                    "Subnet": "172.27.0.0/16",
+                    "Gateway": "172.27.0.1"
+                }
+            ]
+        },
+        "Internal": false,
+        "Attachable": true,
+        "Ingress": false,
+        "ConfigFrom": {
+            "Network": ""
+        },
+        "ConfigOnly": false,
+        "Containers": {
+            "42b9c0a8a397d15711305087e5e368b85648dea63098249ac7fff202eba1cadf": {
+                "Name": "flask-redis_app_1",
+                "EndpointID": "4b84d57e7c279fbaa59ac3a62447825892562c824f639dc9c2fd060ec2b749d9",
+                "MacAddress": "02:42:ac:1b:00:03",
+                "IPv4Address": "172.27.0.3/16",
+                "IPv6Address": ""
+            },
+            "a4802d2e919bca73f2eb6d38d0f9235b22d27437d36e97289fb829adfd30881b": {
+                "Name": "flask-redis_redis_1",
+                "EndpointID": "08a48ca12f7818b642162d6567ceb0fcf3999bfeebae91904bb4d7b71dc9b4f2",
+                "MacAddress": "02:42:ac:1b:00:02",
+                "IPv4Address": "172.27.0.2/16",
+                "IPv6Address": ""
+            }
+        },
+        "Options": {},
+        "Labels": {
+            "com.docker.compose.network": "default",
+            "com.docker.compose.project": "flask-redis",
+            "com.docker.compose.version": "1.23.2"
+        }
+    }
+]
+```
+
+## Rebuilding
+
+Changes are done in Dockerfile and docker-compose.yml
+The changed files are Dockerfile(2) and docker-compose(2).yml
 
 
