@@ -343,3 +343,56 @@ PID   USER     TIME  COMMAND
 /usr/src/app # exit
 [node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
 ```
+
+## Running a new container of a pre-defined service
+
+```
+$ docker-compose run app /bin/sh
+/usr/src/app # ls
+--data              Dockerfile          docker-compose.yml
+--request           app.py              requirements.txt
+/usr/src/app #
+
+
+
+
+$ docker-compose ps
+         Name                   Command           State           Ports
+--------------------------------------------------------------------------------
+flask-redis_app_1        /bin/sh -c flask run     Up      0.0.0.0:5000->5000/tcp
+                         --hos ...
+flask-redis_app_run_b8   /bin/sh                  Up
+799ec348ac
+flask-redis_redis_1      docker-entrypoint.sh     Up      6379/tcp
+                         redis ...
+```
+
+With run, port-mapping is not applied to avoid port-conflicts.
+
+
+<Desired State concept -- change is there then recreate>
+ 
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
