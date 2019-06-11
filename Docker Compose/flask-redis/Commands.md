@@ -191,4 +191,155 @@ $ docker network inspect flask-redis_default
 Changes are done in Dockerfile and docker-compose.yml
 The changed files are Dockerfile(2) and docker-compose(2).yml
 
+```
+[node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
+$ docker-compose build
+redis uses an image, skipping
+Building app
+Step 1/8 : ARG PYTHON_VERSION
+Step 2/8 : FROM python:$PYTHON_VERSION
+ ---> cf41883b24b8
+Step 3/8 : WORKDIR /usr/src/app
+ ---> Using cache
+ ---> cb8c9e8509f6
+Step 4/8 : COPY requirements.txt ./
+ ---> Using cache
+ ---> b29e602ea6fd
+Step 5/8 : RUN pip install --no-cache-dir -r requirements.txt
+ ---> Using cache
+ ---> 3b5c7e50cd31
+Step 6/8 : COPY . .
+ ---> f5176215a692
+Step 7/8 : ENV FLASK_APP=app.py
+ ---> Running in 17735a686036
+Removing intermediate container 17735a686036
+ ---> e2c1150cbedc
+Step 8/8 : CMD flask run --host=0.0.0.0
+ ---> Running in 18ba49b26f9e
+Removing intermediate container 18ba49b26f9e
+ ---> 61f7cc9a4fca
+Successfully built 61f7cc9a4fca
+Successfully tagged flask-redis:1.0
+```
 
+```
+$ docker-compose up -d
+Recreating flask-redis_app_1 ...
+Recreating flask-redis_app_1 ... done
+```
+
+## follow logs
+
+Logs of Both Services:
+
+```
+$ docker-compose logs -f
+Attaching to flask-redis_app_1, flask-redis_redis_1
+app_1    |  * Serving Flask app "app.py" (lazy loading)
+app_1    |  * Environment: development
+app_1    |  * Debug mode: on
+app_1    |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+app_1    |  * Restarting with stat
+app_1    |  * Debugger is active!
+app_1    |  * Debugger PIN: 254-301-589
+redis_1  | 1:C 11 Jun 09:24:42.598 # oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+redis_1  | 1:C 11 Jun 09:24:42.598 # Redis version=4.0.11, bits=64, commit=00000000, modified=0, pid=1, just started
+redis_1  | 1:C 11 Jun 09:24:42.598 # Warning: no config file specified, using the default config. In order to specify a config file use redis-server /path/to/redis.conf
+redis_1  | 1:M 11 Jun 09:24:42.602 * Running mode=standalone, port=6379.
+redis_1  | 1:M 11 Jun 09:24:42.602 # WARNING: The TCP backlog setting of 511 cannot be enforced because /proc/sys/net/core/somaxconn is set to the lower value of 128.
+redis_1  | 1:M 11 Jun 09:24:42.602 # Server initialized
+redis_1  | 1:M 11 Jun 09:24:42.602 # WARNING overcommit_memory is set to 0! Background save may fail under low memory condition. To fix this issue add 'vm.overcommit_memory = 1' to /etc/sysctl.conf and then reboot or run the command 'sysctl vm.overcommit_memory=1' for this to take effect.
+redis_1  | 1:M 11 Jun 09:24:42.602 # WARNING you have Transparent Huge Pages (THP) support enabled in your kernel. This will create latency and memory usage issues with Redis. To fix this issue run the command 'echo never > /sys/kernel/mm/transparent_hugepage/enabled' as root, and add it to your /etc/rc.local in order to retain the setting after a reboot. Redis mustbe restarted after THP is disabled.
+redis_1  | 1:M 11 Jun 09:24:42.602 * Ready to accept connections
+
+app_1    | 172.18.0.1 - - [11/Jun/2019 09:53:06] "GET / HTTP/1.1" 200 -
+
+```
+
+Logs of a particular service:
+
+```
+[node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
+$ docker-compose logs -f app
+Attaching to flask-redis_app_1
+app_1    |  * Serving Flask app "app.py" (lazy loading)
+app_1    |  * Environment: development
+app_1    |  * Debug mode: on
+app_1    |  * Running on http://0.0.0.0:5000/ (Press CTRL+C to quit)
+app_1    |  * Restarting with stat
+app_1    |  * Debugger is active!
+app_1    |  * Debugger PIN: 254-301-589
+app_1    | 172.18.0.1 - - [11/Jun/2019 09:53:06] "GET / HTTP/1.1" 200 -
+```
+
+## Pausing Services
+
+```
+[node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
+$ docker-compose pause
+Pausing flask-redis_redis_1 ... done
+Pausing flask-redis_app_1   ... done
+
+
+[node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
+$ docker-compose ps
+       Name                   Command            State            Ports
+--------------------------------------------------------------------------------
+flask-redis_app_1     /bin/sh -c flask run       Paused   0.0.0.0:5000->5000/tcp
+                      --hos ...
+flask-redis_redis_1   docker-entrypoint.sh       Paused   6379/tcp
+                      redis ...
+
+```
+
+## Unpausing services
+
+```
+$ docker-compose unpause
+Unpausing flask-redis_app_1   ... done
+Unpausing flask-redis_redis_1 ... done
+[node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
+
+
+$ docker-compose ps
+       Name                    Command            State           Ports
+--------------------------------------------------------------------------------
+flask-redis_app_1     /bin/sh -c flask run        Up      0.0.0.0:5000->5000/tcp
+                      --hos ...
+flask-redis_redis_1   docker-entrypoint.sh        Up      6379/tcp
+                      redis ...
+```
+
+## Executing commands in a running service container
+
+```
+$ docker-compose exec redis redis-cli lrange students 0 -1
+1) "\\{'name':Prashansa\\}"
+
+
+
+$ docker-compose exec app /bin/sh
+/usr/src/app # ls
+--data              __pycache__         requirements.txt
+--request           app.py
+Dockerfile          docker-compose.yml
+/usr/src/app # ls -al
+total 16
+-rw-r--r--    1 root     root             0 Jun 11 09:00 --data
+-rw-r--r--    1 root     root             0 Jun 11 09:00 --request
+drwxr-xr-x    1 root     root            25 Jun 11 09:52 .
+drwxr-xr-x    1 root     root            17 Jun 11 09:29 ..
+-rw-r--r--    1 root     root           210 Jun 11 09:43 Dockerfile
+drwxr-xr-x    2 root     root            32 Jun 11 09:52 __pycache__
+-rw-r--r--    1 root     root           505 Jun 11 09:29 app.py
+-rw-r--r--    1 root     root           281 Jun 11 09:42 docker-compose.yml
+-rw-r--r--    1 root     root            12 Jun 11 07:51 requirements.txt
+/usr/src/app # ps
+PID   USER     TIME  COMMAND
+    1 root      0:00 {flask} /usr/local/bin/python /usr/local/bin/flask run --h
+    7 root      0:03 {flask} /usr/local/bin/python /usr/local/bin/flask run --h
+   24 root      0:00 /bin/sh
+   31 root      0:00 ps
+/usr/src/app # exit
+[node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
+```
