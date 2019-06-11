@@ -191,5 +191,47 @@ Restarting wordpress-service_wordpress_1 ... done
 Restarting wordpress-service_db_1        ... done
 ```
 
+## Removing the services
+
+1) Stopping and removing containers all at once
+```
+$ docker-compose down
+Stopping wordpress-service_wordpress_1 ... done
+Stopping wordpress-service_db_1        ... done
+Removing wordpress-service_wordpress_1 ... done
+Removing wordpress-service_db_1        ... done
+Removing network wordpress-service_default
+```
+
+2) Stopping and removing containers along with attached volumes
+
+```
+$ docker-compose down --volumes
+Stopping wordpress-service_wordpress_1 ... done
+Stopping wordpress-service_db_1        ... done
+Removing wordpress-service_wordpress_1 ... done
+Removing wordpress-service_db_1        ... done
+Removing network wordpress-service_default
+Removing volume wordpress-service_db_data
+Removing volume wordpress-service_wp_data``
+
+```
+
+3) Removing Stopped Containers
+
+```
+$ docker-compose stop
+Stopping wordpress-service_wordpress_1 ... done
+Stopping wordpress-service_db_1        ... done
+[node2] (local) root@192.168.0.12 ~/Docker/Docker Compose/wordpress-service
+$ docker-compose rm
+Going to remove wordpress-service_wordpress_1, wordpress-service_db_1
+Are you sure? [yN] y
+Removing wordpress-service_wordpress_1 ... done
+Removing wordpress-service_db_1        ... done
+```
+
+
+
 
 
