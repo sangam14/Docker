@@ -147,3 +147,49 @@ wordpress-service_db_1          docker-entrypoint.sh mysqld      Up      3306/tc
 wordpress-service_wordpress_1   docker-entrypoint.sh apach ...   Up      0.0.0.0:5000->80/tcp
 ```
 
+## Stopping the services
+
+```
+$ docker-compose stop
+Stopping wordpress-service_wordpress_1 ... done
+Stopping wordpress-service_db_1        ... done
+
+
+[node2] (local) root@192.168.0.12 ~/Docker/Docker Compose/wordpress-service
+$ docker-compose ps
+            Name                           Command               State    Ports
+-------------------------------------------------------------------------------
+wordpress-service_db_1          docker-entrypoint.sh mysqld      Exit 0
+wordpress-service_wordpress_1   docker-entrypoint.sh apach ...   Exit 0
+```
+
+## Starting the stopped containers
+
+```
+$ docker-compose  start
+Starting db        ... done
+Starting wordpress ... done
+
+[node2] (local) root@192.168.0.12 ~/Docker/Docker Compose/wordpress-service
+$ docker-compose ps
+            Name                           Command               State          Ports
+---------------------------------------------------------------------------------------------
+wordpress-service_db_1          docker-entrypoint.sh mysqld      Up      3306/tcp, 33060/tcp
+wordpress-service_wordpress_1   docker-entrypoint.sh apach ...   Up      0.0.0.0:5000->80/tcp
+
+[node2] (local) root@192.168.0.12 ~/Docker/Docker Compose/wordpress-service
+$ docker-compose ps --services
+db
+wordpress
+```
+
+## Restarting the services
+
+```
+$ docker-compose  restart
+Restarting wordpress-service_wordpress_1 ... done
+Restarting wordpress-service_db_1        ... done
+```
+
+
+
