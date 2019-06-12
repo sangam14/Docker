@@ -1,3 +1,6 @@
+## For Swarm
+
+
 ```
 $ docker swarm init --advertise-addr 192.168.0.13
 Swarm initialized: current node (oxw4xzhv8bbdmiyutq9h97ibx) is now a manager.
@@ -458,7 +461,132 @@ overall progress: 5 out of 5 tasks
 verify: Service converged
 
 
+[node1] (local) root@192.168.0.13 ~
+$ docker service rm nginx
+nginx
+[node1] (local) root@192.168.0.13 ~
+$ docker network rm n
+new-nginx  nginx-net
+[node1] (local) root@192.168.0.13 ~
+$ docker network rm nginx-net
+nginx-net
+[node1] (local) root@192.168.0.13 ~
+$ docker network rm new-nginx
+new-nginx
+```
+
+## For Standalone Containers
+
+```
+[node1] (local) root@192.168.0.13 ~
+$ docker network create -d overlay test
+bph93zm4ovurn157wouhgv5bg
+
+[node1] (local) root@192.168.0.13 ~
+$ docker run -dit --name a1 alpine
+3213ffc34e1fb930661ef114e1fe7c493df8fa641950c22203227a25c888a9cc
+
+[node1] (local) root@192.168.0.13 ~
+$ docker network connect test a1
+Error response from daemon: Could not attach to network test: rpc error: code = PermissionDenied desc = network test not ma
+nually attachable
+[node1] (local) root@192.168.0.13 ~
+$ docker run -dit --name a2 --network test alpine
+fb2b474191c921151ac08f85eb4a8ae10107c5c509e79b24fcd2334201202b9d
+docker: Error response from daemon: Could not attach to network test: rpc error: code = PermissionDenied desc = network test not manually attachable.
+[node1] (local) root@192.168.0.13 ~
+$ docker stop a1 a2
+a1
+a2
+[node1] (local) root@192.168.0.13 ~
+$ docker rm a1 a2
+a1
+a2
+[node1] (local) root@192.168.0.13 ~
+$ docker network rm test
+test
+
+
+Host 1:
+
+[node1] (local) root@192.168.0.13 ~
+$ docker network create -d overlay --attachable test-net
+arpy93vyxrr70hv6ia1440vty
+[node1] (local) root@192.168.0.13 ~
+$ docker run -it --name alpine1 --network test-net alpine
+/ #
+
+Host 2:
+
+[node2] (local) root@192.168.0.12 ~
+$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+7f2faab54d52        bridge              bridge              local
+ccbdac706bbc        docker_gwbridge     bridge              local
+dea0aa833d9b        host                host                local
+ma3q7hn4r84o        ingress             overlay             swarm
+065bd256b9c6        none                null                local
+[node2] (local) root@192.168.0.12 ~
+
+
+[node2] (local) root@192.168.0.12 ~
+$ docker network ls
+NETWORK ID          NAME                DRIVER              SCOPE
+7f2faab54d52        bridge              bridge              local
+ccbdac706bbc        docker_gwbridge     bridge              local
+dea0aa833d9b        host                host                local
+ma3q7hn4r84o        ingress             overlay             swarm
+065bd256b9c6        none                null                local
+arpy93vyxrr7        test-net            overlay             swarm
+
+
+Host 1:
+
+[node1] (local) root@192.168.0.13 ~
+$ docker attach alpine1
+/ # ping alpine2
+PING alpine2 (10.0.3.4): 56 data bytes
+64 bytes from 10.0.3.4: seq=0 ttl=64 time=0.286 ms
+64 bytes from 10.0.3.4: seq=1 ttl=64 time=0.158 ms
+64 bytes from 10.0.3.4: seq=2 ttl=64 time=0.212 ms
+64 bytes from 10.0.3.4: seq=3 ttl=64 time=0.159 ms
+64 bytes from 10.0.3.4: seq=4 ttl=64 time=0.267 ms
+
+[node1] (local) root@192.168.0.13 ~
+$ docker stop alpine1
+alpine1
+[node1] (local) root@192.168.0.13 ~
+$ docker rm alpine1
+alpine1
+[node1] (local) root@192.168.0.13 ~
+
+[node1] (local) root@192.168.0.13 ~
+$ docker network rm test-net
+Error response from daemon: rpc error: code = FailedPrecondition desc = network arpy93vyxrr70hv6ia1440vty is in use by task
+ hm7jshtlypgnum9i8118li0lh
+[node1] (local) root@192.168.0.13 ~
+
+Host 2:
+
+[node2] (local) root@192.168.0.12 ~
+$ docker stop alpine2
+alpine2
+[node2] (local) root@192.168.0.12 ~
+$ docker rm alpine2
+alpine2
+[node2] (local) root@192.168.0.12 ~
+
+
+Host 1:
+[node1] (local) root@192.168.0.13 ~
+$ docker network rm test-net
+test-net
 
 
 
 ```
+
+
+
+
+
