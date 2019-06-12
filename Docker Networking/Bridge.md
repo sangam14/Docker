@@ -487,4 +487,25 @@ PING 8.8.8.8 (8.8.8.8): 56 data bytes
 round-trip min/avg/max = 1.193/1.244/1.296 ms
 / # read escape sequence
 
+
+[node1] (local) root@192.168.0.13 ~
+$ docker container stop a1 a2 a3 a4
+a1
+a2
+a3
+a4
+[node1] (local) root@192.168.0.13 ~
+$ docker container rm a1 a2 a3 a4
+a1
+a2
+a3
+a4
+[node1] (local) root@192.168.0.13 ~
+$ docker network rm a-net
+a-net
+
+[node1] (local) root@192.168.0.13 ~
+$ docker network rm bridge
+Error response from daemon: bridge is a pre-defined network and cannot be removed
+
 ```
