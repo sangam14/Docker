@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  app:
+    build:
+     context: .
+     dockerfile: Dockerfile
+     args:
+      - PYTHON_VERSION=3.7.0-alpine3.8
+    image: flask-redis:1.0
+    environment:
+      - FLASK_ENV=development
+
+  redis:
+    image: redis:4.0.11-alpine
+
+  load-balancer:
+    build: ./load-balancer
+    links:
+     - app
+    ports:
+     - "8080:8080"
+
