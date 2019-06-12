@@ -121,6 +121,11 @@ $ curl localhost:5000
 ]
 ```
 
+![Port Exposed](https://github.com/Prashansa-K/Docker/blob/master/Docker%20Compose/flask-redis/5000%20port.png)
+
+
+![Webpage](https://github.com/Prashansa-K/Docker/blob/master/Docker%20Compose/flask-redis/flask.png)
+
 ### Network Connectivity between Containers
 
 ```
@@ -228,7 +233,7 @@ Recreating flask-redis_app_1 ...
 Recreating flask-redis_app_1 ... done
 ```
 
-## follow logs
+## Checking Logs
 
 Logs of Both Services:
 
@@ -370,9 +375,7 @@ flask-redis_redis_1      docker-entrypoint.sh     Up      6379/tcp
 With run, port-mapping is not applied to avoid port-conflicts.
 
 
-<Desired State concept -- change is there then recreate>
- 
- ## Pushing to docker Registry
+## Pushing to Docker Registry
  
  ```
  $ docker login
@@ -406,7 +409,7 @@ df64d3292fd6: Mounted from library/redis
  
 Now, we can build the same application stack on another machine by pulling it.
 
-transfer compose file there - scp
+First, transfer compose file to the new machine. You can use SCP for this.
 
 ```
 [node2] (local) root@192.168.0.12 /test/Docker/Docker Compose/flask-redis
@@ -453,6 +456,10 @@ $ curl --header "Content-Type: application/json" \
 }
 
 ```
+
+Hence, the same application was built and accessed on another machine too.
+
+
  
  
 
