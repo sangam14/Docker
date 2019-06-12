@@ -128,7 +128,9 @@ PID    USER   TIME         COMMAND
 
 ## Wordpress Application deployed and made available on port 8080 of host
 
-<images>
+![8080 Exposed](https://github.com/Prashansa-K/Docker/blob/master/Docker%20Compose/wordpress-service/8080%20port.png)
+
+![Wordpress](https://github.com/Prashansa-K/Docker/blob/master/Docker%20Compose/wordpress-service/wordpress.png)
 
 ## Update docker-compose.yml and rebuild the appliction stack with a single command
 
