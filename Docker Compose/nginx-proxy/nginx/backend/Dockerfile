@@ -1,13 +1,11 @@
 # Use a standard Node image from Docker Hub 
 FROM node:boron
 
-# The Dockerfile's author
-LABEL Usama Ashraf
-
 # Create a directory in the container where the code will be placed
 RUN mkdir -p /backend-dir-inside-container
 
 RUN npm install express --save
+
 # Set this as the default, working directory.
 # We'll land here when we SSH into the container.
 WORKDIR /backend-dir-inside-container
