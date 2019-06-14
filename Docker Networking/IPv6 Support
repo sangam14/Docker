@@ -1,0 +1,41 @@
+# Enabling IPv6 Support in Docker
+
+By default, docker containers support only IPv4. To configure them to start using IPv6, we need to edit the configuration file of the docker daemon.
+
+
+Without any changes, the file /etc/docker/daemon.json looks like this usually:
+
+```
+[node1] (local) root@192.168.0.33 ~
+$ cat /etc/docker/daemon.json
+{
+    "experimental": true,
+    "debug": true,
+    "log-level": "info",
+    "insecure-registries": ["127.0.0.1"],
+    "hosts": ["unix:///var/run/docker.sock", "tcp://0.0.0.0:2375"],
+    "tls": false,
+    "tlscacert": "",
+    "tlscert": "",
+    "tlskey": ""
+}
+```
+
+We will edit the file to add a new key-value pair as such:
+
+```
+{
+...
+    "ipv6": true
+...
+}
+
+```
+
+Leave rest of the file same.
+
+Now, reload the docker daemon to apply the configuration changes.
+
+```
+$ systemctl reload docker
+```
