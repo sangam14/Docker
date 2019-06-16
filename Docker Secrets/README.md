@@ -59,6 +59,29 @@ $ docker swarm init --advertise-addr IP-address-of-node
 
 When you create a swarm by running docker swarm init, Docker designates itself as a manager node. By default, the manager node generates a new root Certificate Authority (CA) along with a key pair, which are used to secure communications with other nodes that join the swarm.
 
+### Creating a Secret
+
+```
+$echo "root" | docker secret create db_user -
+
+$echo "db" | docker secret create db_password -
+
+$echo "wordpress" | docker secret create db_name -
+```
+![Image1]()
+
+### To view secrets
+
+```
+$ docker secret ls
+```
+
+![Image2]()
+
+### Adding the secrets to the compose file
+
+
+
 
 
 
