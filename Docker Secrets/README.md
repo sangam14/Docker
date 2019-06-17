@@ -80,7 +80,97 @@ $ docker secret ls
 
 ### Adding the secrets to the compose file
 
+```
+node1] (local) root@192.168.0.33 ~
+$ echo "wordpress" | docker secret create db_name -
+u08gdncxjlcvvqrornef1tpw1
+[node1] (local) root@192.168.0.33 ~
+$ echo "root" | docker secret create db_user -
+rbqtivuuhyw0evt4m4diy0irq
+[node1] (local) root@192.168.0.33 ~
+$ echo "db" | docker secret create db_password -
+48p8qdk4eb2c3wsmupv2716zp
 
+[node1] (local) root@192.168.0.33 ~
+$ docker-compose up -d
+WARNING: Service "db" uses secret "db_password" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "db" uses secret "db_name" which is external. External secrets are not available to containers created bydocker-compose.
+WARNING: Service "wordpress" uses secret "db_name" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "wordpress" uses secret "db_user" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "wordpress" uses secret "db_password" which is external. External secrets are not available to containerscreated by docker-compose.
+WARNING: The Docker Engine you're using is running in swarm mode.
+
+Compose does not use swarm mode to deploy services to multiple nodes in a swarm. All containers will be scheduled on the current node.
+
+To deploy your application across the swarm, use `docker stack deploy`.
+
+Creating network "root_default" with the default driver
+Creating root_db_1 ... done
+Creating root_wordpress_1 ... done
+[node1] (local) root@192.168.0.33 ~
+$ docker-compose ps
+WARNING: Service "db" uses secret "db_password" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "db" uses secret "db_name" which is external. External secrets are not available to containers created bydocker-compose.
+WARNING: Service "wordpress" uses secret "db_name" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "wordpress" uses secret "db_user" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "wordpress" uses secret "db_password" which is external. External secrets are not available to containerscreated by docker-compose.
+      Name                    Command                 State      Ports
+----------------------------------------------------------------------
+root_db_1          docker-entrypoint.sh mysqld      Restarting
+root_wordpress_1   docker-entrypoint.sh apach ...   Restarting
+[node1] (local) root@192.168.0.33 ~
+$ docker-compose down
+WARNING: Service "db" uses secret "db_password" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "db" uses secret "db_name" which is external. External secrets are not available to containers created bydocker-compose.
+WARNING: Service "wordpress" uses secret "db_name" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "wordpress" uses secret "db_user" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "wordpress" uses secret "db_password" which is external. External secrets are not available to containerscreated by docker-compose.
+Stopping root_wordpress_1 ... done
+Stopping root_db_1        ... done
+Removing root_wordpress_1 ... done
+Removing root_db_1        ... done
+Removing network root_default
+[node1] (local) root@192.168.0.33 ~
+$ docker stack deploy --help
+
+Usage:  docker stack deploy [OPTIONS] STACK
+
+Deploy a new stack or update an existing stack
+
+Aliases:
+  deploy, up
+
+Options:
+      --bundle-file string     Path to a Distributed Application Bundle file
+  -c, --compose-file strings   Path to a Compose file, or "-" to read from stdin
+      --orchestrator string    Orchestrator to use (swarm|kubernetes|all)
+      --prune                  Prune services that are no longer referenced
+      --resolve-image string   Query the registry to resolve image digest and supported platforms
+                               ("always"|"changed"|"never") (default "always")
+      --with-registry-auth     Send registry authentication details to Swarm agents
+[node1] (local) root@192.168.0.33 ~
+$ docker stack deploy -c docker-compose.yml wordpress
+Ignoring unsupported options: restart
+
+Creating network wordpress_default
+Creating service wordpress_wordpress
+Creating service wordpress_db
+[node1] (local) root@192.168.0.33 ~
+$ docker-compose ps
+WARNING: Service "db" uses secret "db_password" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "db" uses secret "db_name" which is external. External secrets are not available to containers created bydocker-compose.
+WARNING: Service "wordpress" uses secret "db_name" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "wordpress" uses secret "db_user" which is external. External secrets are not available to containers created by docker-compose.
+WARNING: Service "wordpress" uses secret "db_password" which is external. External secrets are not available to containerscreated by docker-compose.
+Name   Command   State   Ports
+------------------------------
+[node1] (local) root@192.168.0.33 ~
+$ docker service ls
+ID                  NAME                  MODE                REPLICAS            IMAGE               PORTS
+m7qn298caq11        wordpress_db          replicated          1/1                 mysql:5.7
+4p8rud3pkezh        wordpress_wordpress   replicated          1/1                 wordpress:latest    *:8080->80/tcp
+[node1] (local) root@192.168.0.33 ~
+```
 
 
 
